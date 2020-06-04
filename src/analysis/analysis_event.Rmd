@@ -1,0 +1,57 @@
+---
+title: "Analysis_event"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(data.table)
+library(ggplot2)
+
+# read final data
+dt_event <- fread('../../gen/analysis/temp/preclean_event.csv')
+```
+
+## Some rudimentary analysis in Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button in RStudio,a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. 
+
+You can also **knit** the document from the command line, see the example in the `makefile`.
+
+
+### Summary statistics
+
+```{r}
+summary(dt_event)
+```
+
+### Plots
+
+```{r}
+#histogram of the subjectivity of the polarity
+Polarity <- dt_event$polarity
+hist(Polarity, breaks = 50)
+```
+
+```{r}
+# Overlaid histograms
+ggplot(dt_event, aes(x=polarity, color=retweet)) +
+  geom_histogram(fill="white", alpha=0.5, position="identity") + ggtitle('Polarity')
+```
+
+### Plots
+
+```{r}
+#histogram of the subjectivity of the sunjectivity
+Subjectivity <- dt_event$subjectivity
+hist(Subjectivity, breaks = 50)
+```
+
+```{r}
+# Overlaid histograms
+ggplot(dt_event, aes(x=subjectivity, color=retweet)) +
+  geom_histogram(fill="white", alpha=0.5, position="identity") + ggtitle('Subjectivity')
+```
